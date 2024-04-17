@@ -29,14 +29,33 @@ contract InteractionsTest is Test {
     //     assertEq(funder, USER);
     // }
 
+    // function testUserCanFundInteractions() public {
+    //     // arrange
+    //     FundFundMe fundFundMe = new FundFundMe();
+    //     fundFundMe.fundFundMe(address(fundMe));
+
+    //     // act
+    //     WithdrawFundMe withdrawFundMe = new WithdrawFundMe();
+    //     withdrawFundMe.withdrawFundMe(address(fundMe));
+
+    //     // assert
+    //     assert(address(fundMe).balance == 0);
+    // }
+
     function testUserCanFundInteractions() public {
         // arrange
         FundFundMe fundFundMe = new FundFundMe();
+        WithdrawFundMe withdrawFundMe = new WithdrawFundMe();
+
+        //Act
+        // --fund
+        vm.deal(address(fundFundMe), STARTING_BALANCE);
         fundFundMe.fundFundMe(address(fundMe));
 
-        // act
-        WithdrawFundMe withdrawFundMe = new WithdrawFundMe();
+        // --withdraw
+        // vm.startPrank(FundMe.getOwner());
         withdrawFundMe.withdrawFundMe(address(fundMe));
+        // vm.stopPrank();
 
         // assert
         assert(address(fundMe).balance == 0);
